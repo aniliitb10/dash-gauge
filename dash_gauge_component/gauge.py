@@ -40,6 +40,19 @@ class Gauge(html.Div):
         The ending angle of the gauge in degrees (default -45, bottom right)
     gauge_thickness : float, optional
         The thickness of the gauge arc as a fraction of the radius (default 0.1)
+    value_format : str, optional
+        Format string for the displayed value (default "{:.1f}")
+        Examples: "{:.0f}" for no decimal places, "{:.1f}%" for percentage with 1 decimal place
+    font_family : str, optional
+        Font family for the value text (default "Arial, sans-serif")
+    font_size : int, optional
+        Base font size for the value text (default 16)
+    font_color : str, optional
+        Color for the value text (default "rgba(0,0,0,0.8)")
+    tick_font_size : int, optional
+        Font size for the tick labels (default 10)
+    tick_font_color : str, optional
+        Color for the tick labels (default "rgba(0,0,0,0.7)")
     """
 
     def __init__(
@@ -57,12 +70,18 @@ class Gauge(html.Div):
         start_angle=225,  # Start from the bottom left (225 degrees)
         end_angle=-45,    # End at bottom right (-45 degrees)
         gauge_thickness=0.1,  # Thickness of the gauge arc as a fraction of the radius
+        value_format="{:.1f}",  # Format string for the displayed value
+        font_family="Arial, sans-serif",  # Font family for the value text
+        font_size=16,  # Base font size for the value text
+        font_color="rgba(0,0,0,0.8)",  # Color for the value text
+        tick_font_size=10,  # Font size for the tick labels
+        tick_font_color="rgba(0,0,0,0.7)",  # Color for the tick labels
         **kwargs
     ):
         self.id = id
-        self.value = value
         self.min_value = min_value
         self.max_value = max_value
+        self._value = self._validate_value(value)
         self.width = width
         self.height = height
         self.color_ranges = color_ranges or [
@@ -74,6 +93,75 @@ class Gauge(html.Div):
         self.start_angle = start_angle
         self.end_angle = end_angle
         self.gauge_thickness = gauge_thickness
+        self.value_format = value_format
+        self.font_family = font_family
+        self.font_size = font_size
+        self.font_color = font_color
+        self.tick_font_size = tick_font_size
+        self.tick_font_color = tick_font_color
+
+    def _validate_value(self, value):
+        """Validate and clamp the value to be within min_value and max_value."""
+        if value < self.min_value:
+            return self.min_value
+        elif value > self.max_value:
+            return self.max_value
+        return value
+
+    @property
+    def value(self):
+        """Get the current value."""
+        return self._value
+
+    @value.setter
+    def value(self, new_value):
+        """Set the value, ensuring it's within the valid range."""
+        self._value = self._validate_value(new_value)
+
+    def __init__(
+        self,
+        id,
+        value,
+        min_value=0,
+        max_value=100,
+        width='100%',
+        height='100%',
+        color_ranges=None,
+        needle_color='#000000',
+        needle_thickness=8.0,
+        show_value=True,
+        start_angle=225,  # Start from the bottom left (225 degrees)
+        end_angle=-45,    # End at bottom right (-45 degrees)
+        gauge_thickness=0.1,  # Thickness of the gauge arc as a fraction of the radius
+        value_format="{:.1f}",  # Format string for the displayed value
+        font_family="Arial, sans-serif",  # Font family for the value text
+        font_size=16,  # Base font size for the value text
+        font_color="rgba(0,0,0,0.8)",  # Color for the value text
+        tick_font_size=10,  # Font size for the tick labels
+        tick_font_color="rgba(0,0,0,0.7)",  # Color for the tick labels
+        **kwargs
+    ):
+        self.id = id
+        self.min_value = min_value
+        self.max_value = max_value
+        self._value = self._validate_value(value)
+        self.width = width
+        self.height = height
+        self.color_ranges = color_ranges or [
+            {'min': min_value, 'max': max_value, 'color': '#1f77b4'}
+        ]
+        self.needle_color = needle_color
+        self.needle_thickness = needle_thickness
+        self.show_value = show_value
+        self.start_angle = start_angle
+        self.end_angle = end_angle
+        self.gauge_thickness = gauge_thickness
+        self.value_format = value_format
+        self.font_family = font_family
+        self.font_size = font_size
+        self.font_color = font_color
+        self.tick_font_size = tick_font_size
+        self.tick_font_color = tick_font_color
 
         # Create the gauge figure
         fig = self._create_gauge_figure()
@@ -240,7 +328,11 @@ class Gauge(html.Div):
                 y=label_radius * np.sin(angle),
                 text=f"{major_tick_values[i]:.0f}",
                 showarrow=False,
-                font=dict(size=10),
+                font=dict(
+                    size=self.tick_font_size,
+                    color=self.tick_font_color,
+                    family=self.font_family
+                ),
             )
 
         # Add the needle with a triangular shape
@@ -300,14 +392,17 @@ class Gauge(html.Div):
         if self.show_value:
             # Use a responsive font size that scales with the gauge
             # This ensures the text is always proportional to the gauge size
+            # Format the value using the provided format string
+            formatted_value = self.value_format.format(self.value)
             fig.add_annotation(
                 x=0,
                 y=-0.4,  # Position further below the gauge to avoid overlap with center dot
-                text=f"{self.value:.1f}",
+                text=formatted_value,
                 showarrow=False,
                 font=dict(
-                    size=16,  # Base size that will be scaled by the container
-                    color='rgba(0,0,0,0.8)',  # Slightly transparent for better aesthetics
+                    size=self.font_size,  # Base size that will be scaled by the container
+                    color=self.font_color,  # Use the provided font color
+                    family=self.font_family,  # Use the provided font family
                 ),
                 xanchor='center',
                 yanchor='middle',

@@ -2,6 +2,7 @@ import dash
 from dash import html, dcc
 from dash.dependencies import Input, Output
 import dash_gauge_component.gauge as gauge
+from examples.util import Util
 
 # Initialize the Dash app
 app = dash.Dash(__name__)
@@ -26,7 +27,7 @@ app.layout = html.Div([
             ),
         ], style={'width': '45%', 'display': 'inline-block', 'padding': '10px', 'verticalAlign': 'top'}),
 
-        # Multi-color Gauge Example
+        # Multicolor Gauge Example
         html.Div([
             html.H2("Multi-color Gauge", style={'textAlign': 'center'}),
             html.P("Gauge with multiple color ranges", style={'textAlign': 'center'}),
@@ -58,7 +59,7 @@ app.layout = html.Div([
                 max_value=100,
                 value=60,
                 width="100%",  # Percentage-based width
-                height="100%", # Equal height for a perfect circle
+                height="100%",  # Equal height for a perfect circle
                 gauge_thickness=0.1
             ),
         ], style={'width': '45%', 'display': 'inline-block', 'padding': '10px', 'verticalAlign': 'top'}),
@@ -93,19 +94,8 @@ app.layout = html.Div([
                 value=90,
                 width="100%",
                 height="100%",
-                color_ranges=[
-                    {'min': 0, 'max': 10, 'color': '#FF0000'},   # Red
-                    {'min': 10, 'max': 20, 'color': '#FF3300'},  # Red-orange
-                    {'min': 20, 'max': 30, 'color': '#FF6600'},  # Orange-red
-                    {'min': 30, 'max': 40, 'color': '#FF9900'},  # Orange
-                    {'min': 40, 'max': 50, 'color': '#FFCC00'},  # Yellow-orange
-                    {'min': 50, 'max': 60, 'color': '#FFFF00'},  # Yellow
-                    {'min': 60, 'max': 70, 'color': '#CCFF00'},  # Yellow-green
-                    {'min': 70, 'max': 80, 'color': '#99FF00'},  # Light green
-                    {'min': 80, 'max': 90, 'color': '#66FF00'},  # Green-yellow
-                    {'min': 90, 'max': 100, 'color': '#00FF00'}, # Green
-                ],
-                gauge_thickness=0.5
+                color_ranges=Util.generate_gradient_colors('#FF0000', '#00FF00', 4, 0.0, 100.0),
+                gauge_thickness=0.5,
             ),
         ], style={'width': '45%', 'display': 'inline-block', 'padding': '10px', 'verticalAlign': 'top'}),
 
@@ -122,7 +112,8 @@ app.layout = html.Div([
                 height="100%",
                 needle_color="#FF5733",
                 needle_thickness=4.0,
-                gauge_thickness=0.5
+                gauge_thickness=0.5,
+                show_value=False,
             ),
         ], style={'width': '45%', 'display': 'inline-block', 'padding': '10px', 'verticalAlign': 'top'}),
     ]),

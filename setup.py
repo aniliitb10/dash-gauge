@@ -1,14 +1,14 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="dash-gauge-component",
+    name="dash-gauge",
     version="0.1.0",
-    author="Dash Gauge Component Team",
-    author_email="example@example.com",
-    description="A responsive gauge component for Dash applications",
+    author="Anil Kumar",
+    author_email="aniliitb10@gamil.com",
+    description="A responsive gauge component (with needle) for Dash applications",
     long_description=open("README.md", "r").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/dash-gauge-component",
+    url="https://github.com/aniliitb10/dash-gauge",
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
