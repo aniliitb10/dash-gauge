@@ -149,6 +149,12 @@ To test the visual aspects of the gauge component:
 | tick_font_size   | number  | 10                                                         | Font size for the tick labels                                                                          |
 | tick_font_color  | string  | "rgba(0,0,0,0.7)"                                          | Color for the tick labels                                                                              |
 
+
+## Sample screenshots
+
+![basic gague.png](screenshots/basic%20gague.png)
+![multi-color gauge.png](screenshots/multi-color%20gauge.png)
+
 ## License
 
 MIT

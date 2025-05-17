@@ -1,10 +1,7 @@
 import dash
 from dash import html
-import sys
-import os
 
 # Add the project root directory to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from dash_gauge_component.gauge import Gauge
 
 app = dash.Dash(__name__)
@@ -30,9 +27,9 @@ app.layout = html.Div([
                 needle_thickness=4.0,
                 gauge_thickness=0.5,
                 value_format="{:.0f}%",
-                font_family="Helvetica, sans-serif",
-                font_size=25,
-                font_color="#333333",
+                value_font_family="Helvetica, sans-serif",
+                value_font_size=25,
+                value_font_color="#333333",
                 tick_font_size=18,
                 tick_font_color="#666666",
             ),
@@ -41,4 +38,4 @@ app.layout = html.Div([
 ])
 
 if __name__ == '__main__':
-    app.run(debug=True, )
+    app.run(debug=True)

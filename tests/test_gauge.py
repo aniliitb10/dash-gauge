@@ -28,9 +28,9 @@ class TestGauge(unittest.TestCase):
         self.assertEqual(gauge.end_angle, -45, "Gauge's end angle is incorrect.")
         self.assertEqual(gauge.gauge_thickness, 0.1, "Gauge's gauge thickness is incorrect.")
         self.assertEqual(gauge.value_format, "{:.1f}", "Gauge's value format is incorrect.")
-        self.assertEqual(gauge.font_family, "Arial, sans-serif", "Gauge's font family is incorrect.")
-        self.assertEqual(gauge.font_size, 16, "Gauge's font size is incorrect.")
-        self.assertEqual(gauge.font_color, "rgba(0,0,0,0.8)", "Gauge's font color is incorrect.")
+        self.assertEqual(gauge.value_font_family, "Arial, sans-serif", "Gauge's font family is incorrect.")
+        self.assertEqual(gauge.value_font_size, 16, "Gauge's font size is incorrect.")
+        self.assertEqual(gauge.value_font_color, "rgba(0,0,0,0.8)", "Gauge's font color is incorrect.")
         self.assertEqual(gauge.tick_font_size, 10, "Gauge's tick font size is incorrect.")
         self.assertEqual(gauge.tick_font_color, "rgba(0,0,0,0.7)", "Gauge's tick font color is incorrect.")
 
@@ -51,9 +51,9 @@ class TestGauge(unittest.TestCase):
             end_angle=0,
             gauge_thickness=0.2,
             value_format="{:.2f}%",
-            font_family="Helvetica, sans-serif",
-            font_size=20,
-            font_color="#FF5733",
+            value_font_family="Helvetica, sans-serif",
+            value_font_size=20,
+            value_font_color="#FF5733",
             tick_font_size=12,
             tick_font_color="#3366FF",
         )
@@ -72,9 +72,9 @@ class TestGauge(unittest.TestCase):
         self.assertEqual(gauge.end_angle, 0, "Gauge's end angle is incorrect with custom values.")
         self.assertEqual(gauge.gauge_thickness, 0.2, "Gauge's gauge thickness is incorrect.")
         self.assertEqual(gauge.value_format, "{:.2f}%", "Gauge's value format is incorrect with custom values.")
-        self.assertEqual(gauge.font_family, "Helvetica, sans-serif", "Gauge's font family is incorrect with custom values.")
-        self.assertEqual(gauge.font_size, 20, "Gauge's font size is incorrect with custom values.")
-        self.assertEqual(gauge.font_color, "#FF5733", "Gauge's font color is incorrect with custom values.")
+        self.assertEqual(gauge.value_font_family, "Helvetica, sans-serif", "Gauge's font family is incorrect with custom values.")
+        self.assertEqual(gauge.value_font_size, 20, "Gauge's font size is incorrect with custom values.")
+        self.assertEqual(gauge.value_font_color, "#FF5733", "Gauge's font color is incorrect with custom values.")
         self.assertEqual(gauge.tick_font_size, 12, "Gauge's tick font size is incorrect with custom values.")
         self.assertEqual(gauge.tick_font_color, "#3366FF", "Gauge's tick font color is incorrect with custom values.")
 

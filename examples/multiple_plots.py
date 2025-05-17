@@ -1,11 +1,14 @@
 import dash
-from dash import html, dcc
-from dash.dependencies import Input, Output
+from dash import html
+
 import dash_gauge_component.gauge as gauge
 from examples.util import Util
 
 # Initialize the Dash app
 app = dash.Dash(__name__)
+
+# Expose the server variable for Gunicorn
+server = app.server
 
 # Define the app layout
 app.layout = html.Div([
@@ -35,15 +38,26 @@ app.layout = html.Div([
                 id="multi-color-gauge",
                 min_value=0,
                 max_value=100,
-                value=42,
+                value=94,
                 width="100%",
                 height="100%",
                 color_ranges=[
-                    {'min': 0, 'max': 25, 'color': '#FF0000'},  # Red
-                    {'min': 25, 'max': 75, 'color': '#FFFF00'},  # Yellow
-                    {'min': 75, 'max': 100, 'color': '#00FF00'},  # Green
+                    {'min': 0, 'max': 33, 'color': '#FF0000'},  # Red
+                    {'min': 33, 'max': 67, 'color': '#FFFF00'},  # Yellow
+                    {'min': 67, 'max': 100, 'color': '#00FF00'},  # Green
                 ],
-                gauge_thickness=0.1
+                gauge_thickness=1,
+                needle_thickness=12,
+
+                show_value=True,
+                value_format="{:.0f}%",
+                value_font_size=25,
+                value_font_family='Numbers',
+                value_font_color='auto',
+
+                tick_font_size=16,
+                tick_font_color='#666666',
+                tick_label_radius=1.2,
             ),
         ], style={'width': '45%', 'display': 'inline-block', 'padding': '10px', 'verticalAlign': 'top'}),
     ]),
